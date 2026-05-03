@@ -904,11 +904,11 @@ async function downloadGIF() {
         const gifW = 240;
         const gifH = Math.round(240 * (capturedPhotos[0].height / capturedPhotos[0].width));
 
-        if (typeof gifshot === 'undefined') {
+        if (typeof window.gifshot === 'undefined') {
             throw new Error("GIF Library not loaded. Check your internet connection.");
         }
 
-        gifshot.createGIF({
+        window.gifshot.createGIF({
             images: resizedImages,
             gifWidth: gifW,
             gifHeight: gifH,
