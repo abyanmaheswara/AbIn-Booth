@@ -881,38 +881,66 @@ function downloadStrip() {
 }
 
 async function downloadGIF() {
-    if (capturedPhotos.length === 0) return;
-    gifBtn.innerText = "⚡ Processing...";
+    if (capturedPhotos.length === 0) {
+        alert("Take some photos first!");
+        return;
+    }
+    
+    gifBtn.innerText = "⚡ Rendering...";
     gifBtn.disabled = true;
 
-    const resizedImages = capturedPhotos.map(img => {
-        const canvas = document.createElement('canvas');
-        canvas.width = 300; 
-        canvas.height = Math.round(300 * (img.height / img.width));
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-        return canvas.toDataURL('image/jpeg', 0.6); 
-    });
-    
-    gifshot.createGIF({
-        images: resizedImages,
-        gifWidth: 300,
-        gifHeight: Math.round(300 * (capturedPhotos.length > 0 ? (capturedPhotos[0].height / capturedPhotos[0].width) : 0.75)), 
-        interval: 0.3,
-        numFrames: resizedImages.length,
-        frameDuration: 1,
-        sampleInterval: 30,
-        numWorkers: 4
-    }, function (obj) {
-        if (!obj.error) {
-            const link = document.createElement('a');
-            link.download = 'abin-booth-animation.gif';
-            link.href = obj.image;
-            link.click();
+    try {
+        // Pre-resize images to be very small for GIF stability
+        const resizedImages = capturedPhotos.map(img => {
+            const canvas = document.createElement('canvas');
+            const targetW = 240; // Smaller width for better stability
+            canvas.width = targetW; 
+            canvas.height = Math.round(targetW * (img.height / img.width));
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            return canvas.toDataURL('image/jpeg', 0.5); 
+        });
+        
+        const gifW = 240;
+        const gifH = Math.round(240 * (capturedPhotos[0].height / capturedPhotos[0].width));
+
+        if (typeof gifshot === 'undefined') {
+            throw new Error("GIF Library not loaded. Check your internet connection.");
         }
+
+        gifshot.createGIF({
+            images: resizedImages,
+            gifWidth: gifW,
+            gifHeight: gifH,
+            interval: 0.3,
+            numFrames: resizedImages.length,
+            frameDuration: 1,
+            sampleInterval: 20,
+            numWorkers: 2 // Reduced workers for better stability
+        }, function (obj) {
+            if (!obj.error) {
+                const link = document.createElement('a');
+                link.download = `abin-booth-gif-${Date.now()}.gif`;
+                link.href = obj.image;
+                link.click();
+                gifBtn.innerText = "GIF ✅";
+            } else {
+                console.error("GIFShot Error:", obj.errorMsg);
+                alert("GIF Error: " + obj.errorMsg);
+                gifBtn.innerText = "GIF Error";
+            }
+            
+            setTimeout(() => {
+                gifBtn.innerText = "GIF";
+                gifBtn.disabled = false;
+            }, 2000);
+        });
+    } catch (err) {
+        console.error("GIF Process Error:", err);
+        alert("Failed to process GIF: " + err.message);
         gifBtn.innerText = "GIF";
         gifBtn.disabled = false;
-    });
+    }
 }
 
 function resetBooth() {
