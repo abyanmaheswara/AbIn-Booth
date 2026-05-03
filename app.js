@@ -18,6 +18,7 @@ const readyBadge = document.getElementById('ready-badge');
 const downloadBtn = document.getElementById('download-btn');
 const gifBtn = document.getElementById('gif-btn');
 const retakeBtn = document.getElementById('retake-btn');
+const downloadAllBtn = document.getElementById('download-all-btn');
 const reviewControls = document.getElementById('review-controls');
 const retakeShotBtn = document.getElementById('retake-shot-btn');
 const nextShotBtn = document.getElementById('next-shot-btn');
@@ -210,6 +211,15 @@ function setupControls() {
     downloadBtn.onclick = downloadStrip;
     gifBtn.onclick = downloadGIF;
     retakeBtn.onclick = resetBooth;
+    
+    downloadAllBtn.onclick = () => {
+        capturedPhotos.forEach((canvas, i) => {
+            const link = document.createElement('a');
+            link.download = `abin-photo-individual-${i+1}.png`;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        });
+    };
 }
 
 function updatePreviewRatio() {
@@ -414,6 +424,7 @@ async function startShootSequence() {
     gifBtn.style.display = 'flex';
     retakeBtn.style.display = 'block';
     galleryContainer.style.display = 'block';
+    downloadAllBtn.style.display = 'flex';
     playChime();
 }
 
@@ -911,6 +922,7 @@ function resetBooth() {
     downloadBtn.style.display = 'none';
     gifBtn.style.display = 'none';
     retakeBtn.style.display = 'none';
+    downloadAllBtn.style.display = 'none';
     galleryContainer.style.display = 'none';
     galleryGrid.innerHTML = '';
     startBtn.innerText = "Start Shoot";
