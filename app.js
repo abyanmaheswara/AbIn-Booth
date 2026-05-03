@@ -151,6 +151,8 @@ async function setupWebcam() {
     }
 }
 
+
+
 function setupControls() {
     document.querySelectorAll('#layout-controls button').forEach(btn => {
         btn.onclick = () => {
@@ -881,6 +883,13 @@ function downloadStrip() {
 }
 
 async function downloadGIF() {
+    const gifLib = window.gifshot || gifshot;
+    
+    if (typeof gifLib === 'undefined') {
+        alert("GIF library is still loading or failed to load. Please refresh or check your connection.");
+        return;
+    }
+
     if (capturedPhotos.length === 0) {
         alert("Take some photos first!");
         return;
@@ -904,11 +913,7 @@ async function downloadGIF() {
         const gifW = 240;
         const gifH = Math.round(240 * (capturedPhotos[0].height / capturedPhotos[0].width));
 
-        if (typeof window.gifshot === 'undefined') {
-            throw new Error("GIF Library not loaded. Check your internet connection.");
-        }
-
-        window.gifshot.createGIF({
+        gifLib.createGIF({
             images: resizedImages,
             gifWidth: gifW,
             gifHeight: gifH,
@@ -916,7 +921,7 @@ async function downloadGIF() {
             numFrames: resizedImages.length,
             frameDuration: 1,
             sampleInterval: 20,
-            numWorkers: 2 // Reduced workers for better stability
+            numWorkers: 2 
         }, function (obj) {
             if (!obj.error) {
                 const link = document.createElement('a');
