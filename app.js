@@ -226,9 +226,6 @@ function setupControls() {
     };
 }
 
-    }, 100);
-}
-
 function goToStep(step) {
     document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
