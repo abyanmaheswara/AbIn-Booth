@@ -161,10 +161,11 @@ h1::after {
 }
 
 .control-label {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     text-transform: uppercase;
-    color: var(--muted-pink);
+    color: var(--muted-text);
     font-weight: bold;
+    letter-spacing: 1px;
 }
 
 .button-group {
@@ -440,9 +441,9 @@ h1::after {
 }
 
 .gallery-title {
-    font-size: 0.9rem;
+    font-size: 0.8rem;
     text-transform: uppercase;
-    color: var(--muted-pink);
+    color: var(--muted-text);
     margin-bottom: 15px;
     text-align: center;
     letter-spacing: 2px;
@@ -455,7 +456,7 @@ h1::after {
 .gallery-title::before, .gallery-title::after {
     content: '';
     height: 1px;
-    background: rgba(255, 45, 120, 0.3);
+    background: rgba(255, 255, 255, 0.1);
     flex: 1;
 }
 
@@ -580,12 +581,47 @@ h1::after {
     animation: ready-glow 2s infinite ease-in-out;
 }
 
-/* Responsive */
+/* Responsive Optimizations */
 @media (max-width: 900px) {
+    header { padding: 40px 20px 20px; }
+    h1 { font-size: 2.5rem; letter-spacing: 4px; }
+    
     .app-container {
         flex-direction: column;
+        gap: 20px;
+        padding: 10px;
     }
     .left-panel, .right-panel {
         min-width: 100%;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 600px) {
+    .controls-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .frame-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    
+    .sticker-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    .countdown-overlay {
+        font-size: 5rem;
+    }
+    
+    .review-controls {
+        bottom: 10px;
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .review-btn {
+        width: 100%;
+        padding: 15px;
     }
 }
