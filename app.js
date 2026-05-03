@@ -214,6 +214,8 @@ function setupControls() {
     gifBtn.onclick = downloadGIF;
     retakeBtn.onclick = resetBooth;
     
+    document.getElementById('go-to-shoot').onclick = () => goToStep(2);
+    
     downloadAllBtn.onclick = () => {
         capturedPhotos.forEach((canvas, i) => {
             const link = document.createElement('a');
@@ -222,6 +224,22 @@ function setupControls() {
             link.click();
         });
     };
+}
+
+    }, 100);
+}
+
+function goToStep(step) {
+    document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+    
+    document.getElementById(`slide-${step}`).classList.add('active');
+    document.getElementById(`step-dot-${step}`).classList.add('active');
+    
+    // Sync AR canvas size if moving to step 2
+    if (step === 2) {
+        setTimeout(updatePreviewRatio, 100);
+    }
 }
 
 function updatePreviewRatio() {
@@ -417,15 +435,16 @@ async function startShootSequence() {
 
     finalizeStrip();
     showGallery();
+    goToStep(3);
+    
     isShooting = false;
     startBtn.disabled = false;
-    startBtn.innerText = "Shoot Again";
+    startBtn.innerText = "Start Shoot";
     shootStatus.style.display = 'none';
     readyBadge.style.display = 'block';
     downloadBtn.style.display = 'flex';
     gifBtn.style.display = 'flex';
     retakeBtn.style.display = 'block';
-    galleryContainer.style.display = 'block';
     downloadAllBtn.style.display = 'flex';
     playChime();
 }
@@ -956,9 +975,9 @@ function resetBooth() {
     gifBtn.style.display = 'none';
     retakeBtn.style.display = 'none';
     downloadAllBtn.style.display = 'none';
-    galleryContainer.style.display = 'none';
     galleryGrid.innerHTML = '';
-    startBtn.innerText = "Start Shoot";
+    startBtn.innerText = "Start Session";
+    goToStep(1);
 }
 
 // Start the app

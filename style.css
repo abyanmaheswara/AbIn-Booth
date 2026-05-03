@@ -96,19 +96,78 @@ h1::after {
 
 .subtitle {
     font-size: 1rem;
-    color: var(--muted-pink);
+    color: var(--muted-text);
     letter-spacing: 2px;
     text-transform: uppercase;
 }
 
-.app-container {
+/* Stepper UI */
+.stepper {
     display: flex;
-    gap: 30px;
-    padding: 20px;
+    justify-content: center;
+    gap: 40px;
+    margin-top: 30px;
+}
+
+.step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: var(--muted-text);
+    font-size: 0.8rem;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+}
+
+.step span {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.step.active {
+    color: white;
+}
+
+.step.active span {
+    background: var(--accent-gradient);
+    border-color: transparent;
+    box-shadow: 0 0 20px rgba(121, 40, 202, 0.5);
+    transform: scale(1.2);
+}
+
+.app-container {
+    padding: 40px 20px;
     max-width: 1200px;
     width: 100%;
-    justify-content: center;
-    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Slide Logic */
+.slide {
+    display: none;
+    width: 100%;
+    animation: slideIn 0.5s ease forwards;
+}
+
+.slide.active {
+    display: block;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .panel {
@@ -129,21 +188,41 @@ h1::after {
     background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
-.left-panel {
-    flex: 1.5;
-    min-width: 500px;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
+.panel-title {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 25px;
+    color: var(--primary-cyan);
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
-.right-panel {
-    flex: 1;
-    min-width: 320px;
+/* Setup Slide */
+.setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    margin-bottom: 30px;
+}
+
+/* Shoot Slide */
+.shoot-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    gap: 30px;
+}
+
+.preview-panel {
+    max-width: 800px;
+    width: 100%;
+}
+
+/* Result Slide */
+.result-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
 }
 
 /* Controls */

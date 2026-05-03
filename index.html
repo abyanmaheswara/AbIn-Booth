@@ -18,135 +18,194 @@
 <body>
     <header>
         <h1>AbIn Booth</h1>
+        <div class="stepper">
+            <div class="step active" id="step-dot-1"><span>1</span>Setup</div>
+            <div class="step" id="step-dot-2"><span>2</span>Shoot</div>
+            <div class="step" id="step-dot-3"><span>3</span>Result</div>
+        </div>
     </header>
 
     <main class="app-container">
-        <!-- Left Panel: Settings & Webcam -->
-        <section class="panel left-panel">
-            <div class="controls-grid">
-                <!-- Layout Controls -->
-                <div class="control-group">
-                    <span class="control-label">Strip Layout</span>
-                    <div class="button-group" id="layout-controls">
-                        <button class="toggle-btn" data-value="2">2 Photos</button>
-                        <button class="toggle-btn" data-value="3">3 Photos</button>
-                        <button class="toggle-btn active" data-value="4">4 Photos</button>
+        <!-- SLIDE 1: SETUP -->
+        <div class="slide active" id="slide-1">
+            <div class="setup-grid">
+                <section class="panel setup-panel">
+                    <h2 class="panel-title">Design Your Strip</h2>
+                    <div class="controls-grid">
+                        <!-- Layout Controls -->
+                        <div class="control-group">
+                            <span class="control-label">Layout</span>
+                            <div class="button-group" id="layout-controls">
+                                <button class="toggle-btn" data-value="2">2 Photos</button>
+                                <button class="toggle-btn" data-value="3">3 Photos</button>
+                                <button class="toggle-btn active" data-value="4">4 Photos</button>
+                            </div>
+                        </div>
+                        <!-- Ratio Controls -->
+                        <div class="control-group">
+                            <span class="control-label">Photo Ratio</span>
+                            <div class="button-group" id="ratio-controls">
+                                <button class="toggle-btn" data-value="4:3">4:3</button>
+                                <button class="toggle-btn active" data-value="1:1">1:1</button>
+                                <button class="toggle-btn" data-value="3:4">3:4</button>
+                            </div>
+                        </div>
+                        <!-- Timer Controls -->
+                        <div class="control-group">
+                            <span class="control-label">Countdown</span>
+                            <div class="button-group" id="timer-controls">
+                                <button class="toggle-btn" data-value="3">3s</button>
+                                <button class="toggle-btn active" data-value="5">5s</button>
+                                <button class="toggle-btn" data-value="10">10s</button>
+                            </div>
+                        </div>
+                        <!-- Filter Controls -->
+                        <div class="control-group">
+                            <span class="control-label">Aesthetic Filter</span>
+                            <div class="button-group" id="filter-controls">
+                                <button class="toggle-btn active" data-filter="none">None</button>
+                                <button class="toggle-btn" data-filter="vintage">Vintage</button>
+                                <button class="toggle-btn" data-filter="mono">B&W</button>
+                                <button class="toggle-btn" data-filter="warm">Warm</button>
+                                <button class="toggle-btn" data-filter="cool">Cyber</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                
-                <!-- Ratio Controls -->
-                <div class="control-group">
-                    <span class="control-label">Photo Ratio</span>
-                    <div class="button-group" id="ratio-controls">
-                        <button class="toggle-btn" data-value="1:1">1:1 Square</button>
-                        <button class="toggle-btn active" data-value="4:3">4:3 Std</button>
-                        <button class="toggle-btn" data-value="3:4">3:4 Tall</button>
-                        <button class="toggle-btn" data-value="2:3">2:3 Classic</button>
-                    </div>
-                </div>
+                </section>
 
-                <!-- Timer Controls -->
-                <div class="control-group">
-                    <span class="control-label">Countdown</span>
-                    <div class="button-group" id="timer-controls">
-                        <button class="toggle-btn active" data-value="3">3s</button>
-                        <button class="toggle-btn" data-value="5">5s</button>
-                        <button class="toggle-btn" data-value="10">10s</button>
+                <section class="panel setup-panel">
+                    <h2 class="panel-title">Pick Stickers & Frame</h2>
+                    <div class="control-group" style="margin-bottom: 20px;">
+                        <span class="control-label">Interactive Stickers</span>
+                        <div class="sticker-grid">
+                            <div class="sticker-toggle" data-sticker="bunny">🐰</div>
+                            <div class="sticker-toggle" data-sticker="stars">✨</div>
+                            <div class="sticker-toggle" data-sticker="hearts">💖</div>
+                            <div class="sticker-toggle" data-sticker="crown">👑</div>
+                            <div class="sticker-toggle" data-sticker="glasses">🕶️</div>
+                        </div>
                     </div>
-                </div>
+                    <div class="control-group">
+                        <span class="control-label">Premium Frames</span>
+                        <div class="frame-grid">
+                            <div class="frame-item active" data-frame="none">
+                                <div class="frame-name">Classic</div>
+                            </div>
+                            <div class="frame-item" data-frame="neon">
+                                <div class="frame-name">Neon</div>
+                            </div>
+                            <div class="frame-item" data-frame="grid">
+                                <div class="frame-name">Grid</div>
+                            </div>
+                            <div class="frame-item" data-frame="film">
+                                <div class="frame-name">Film</div>
+                            </div>
+                            <div class="frame-item" data-frame="polaroid">
+                                <div class="frame-name">Pola</div>
+                            </div>
+                            <div class="frame-item" data-frame="glitch">
+                                <div class="frame-name">Glitch</div>
+                            </div>
+                            <div class="frame-item" data-frame="cyber">
+                                <div class="frame-name">Cyber</div>
+                            </div>
+                            <div class="frame-item" data-frame="retro">
+                                <div class="frame-name">80s</div>
+                            </div>
+                            <div class="frame-item" data-frame="sakura">
+                                <div class="frame-name">Sakura</div>
+                            </div>
+                            <div class="frame-item" data-frame="minimal">
+                                <div class="frame-name">Clean</div>
+                            </div>
+                            <div class="frame-item" data-frame="y2k">
+                                <div class="frame-name">Y2K</div>
+                            </div>
+                            <div class="frame-item" data-frame="manga">
+                                <div class="frame-name">Manga</div>
+                            </div>
+                            <div class="frame-item" data-frame="vapor">
+                                <div class="frame-name">Vapor</div>
+                            </div>
+                            <div class="frame-item" data-frame="luxury">
+                                <div class="frame-name">Gold</div>
+                            </div>
+                            <div class="frame-item" data-frame="comic">
+                                <div class="frame-name">Pop</div>
+                            </div>
+                            <div class="frame-item" data-frame="holo">
+                                <div class="frame-name">Holo</div>
+                            </div>
+                            <div class="frame-item" data-frame="ticket">
+                                <div class="frame-name">Ticket</div>
+                            </div>
+                            <div class="frame-item" data-frame="denim">
+                                <div class="frame-name">Denim</div>
+                            </div>
+                            <div class="frame-item" data-frame="starry">
+                                <div class="frame-name">Stars</div>
+                            </div>
+                            <div class="frame-item" data-frame="cybercity">
+                                <div class="frame-name">City</div>
+                            </div>
+                            <div class="frame-item" data-frame="graffiti">
+                                <div class="frame-name">Tag</div>
+                            </div>
+                            <div class="frame-item" data-frame="space">
+                                <div class="frame-name">Space</div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <button class="start-btn" id="go-to-shoot">Ready to Shoot →</button>
+        </div>
 
-                <!-- AR Sticker Controls -->
-                <div class="control-group" style="grid-column: span 2;">
-                    <span class="control-label">AR Stickers</span>
-                    <div class="sticker-grid" id="sticker-controls">
-                        <div class="sticker-toggle" data-sticker="bunny" title="Neon Bunny Ears">🐰</div>
-                        <div class="sticker-toggle" data-sticker="stars" title="Sparkle Stars">✨</div>
-                        <div class="sticker-toggle" data-sticker="hearts" title="Heart Eyes">❤️</div>
-                        <div class="sticker-toggle" data-sticker="crown" title="Glitch Crown">👑</div>
-                        <div class="sticker-toggle" data-sticker="glasses" title="Cyber Sunglasses">🕶️</div>
+        <!-- SLIDE 2: SHOOTING -->
+        <div class="slide" id="slide-2">
+            <div class="shoot-container">
+                <section class="panel preview-panel">
+                    <div class="preview-container">
+                        <video id="webcam-video" autoplay playsinline></video>
+                        <canvas id="ar-canvas"></canvas>
+                        <div class="countdown-overlay" id="countdown-text">3</div>
+                        <div class="flash-overlay" id="flash"></div>
+                        <div class="status-indicator" id="shoot-status">Photo 1 of 4</div>
+                        <div class="review-controls" id="review-controls">
+                            <button class="review-btn retake-shot" id="retake-shot-btn">Retake</button>
+                            <button class="review-btn next-shot" id="next-shot-btn">Keep & Next</button>
+                        </div>
                     </div>
-                </div>
-
-                <!-- Filter Controls -->
-                <div class="control-group" style="grid-column: span 2;">
-                    <span class="control-label">Live Filters</span>
-                    <div class="button-group" id="filter-controls">
-                        <button class="toggle-btn active" data-filter="normal">Normal</button>
-                        <button class="toggle-btn" data-filter="bw">B&W</button>
-                        <button class="toggle-btn" data-filter="vintage">Vintage</button>
-                        <button class="toggle-btn" data-filter="soft">Soft</button>
-                        <button class="toggle-btn" data-filter="vivid">Vivid</button>
-                        <button class="toggle-btn" data-filter="noir">Noir</button>
-                        <button class="toggle-btn" data-filter="neon">Neon</button>
-                    </div>
-                </div>
-
-                <!-- Frame Theme Controls -->
-                <div class="control-group" style="grid-column: span 2;">
-                    <span class="control-label">Frame Theme</span>
-                    <div class="frame-grid" id="frame-controls">
-                        <div class="frame-item active" data-frame="neon" style="border: 2px solid #FF2D78;"><span class="frame-name">Neon</span></div>
-                        <div class="frame-item" data-frame="grid" style="background-image: radial-gradient(#333 1px, transparent 1px); background-size: 5px 5px;"><span class="frame-name">Grid</span></div>
-                        <div class="frame-item" data-frame="film" style="border-left: 5px dashed #444; border-right: 5px dashed #444;"><span class="frame-name">Film</span></div>
-                        <div class="frame-item" data-frame="polaroid" style="background: white; border-bottom: 10px solid white;"><span class="frame-name" style="color: #000;">Polaroid</span></div>
-                        <div class="frame-item" data-frame="glitch" style="border: 1px solid #FF2D78; box-shadow: 2px 2px 0 cyan, -2px -2px 0 magenta;"><span class="frame-name">Glitch</span></div>
-                        <div class="frame-item" data-frame="cyber" style="border: 2px solid cyan; border-radius: 4px;"><span class="frame-name">Cyber</span></div>
-                        <div class="frame-item" data-frame="retro" style="background: linear-gradient(to bottom, #ff0080, #7928ca);"><span class="frame-name">Retro</span></div>
-                        <div class="frame-item" data-frame="sakura" style="border: 2px solid #ffb7c5;"><span class="frame-name">Sakura</span></div>
-                        <div class="frame-item" data-frame="minimal" style="border: 1px solid white; outline: 1px solid white; outline-offset: -4px;"><span class="frame-name">Minimal</span></div>
-                        <div class="frame-item" data-frame="y2k" style="background: linear-gradient(135deg, #e0e0e0, #bdbdbd); border: 2px outset #fff;"><span class="frame-name" style="color:#000">Y2K</span></div>
-                        <div class="frame-item" data-frame="manga" style="border: 3px solid #000; background: #fff;"><span class="frame-name" style="color:#000">Manga</span></div>
-                        <div class="frame-item" data-frame="vapor" style="background: linear-gradient(to right, #00d2ff, #928dab);"><span class="frame-name">Vapor</span></div>
-                        <div class="frame-item" data-frame="luxury" style="border: 3px double #ffd700; background: #000;"><span class="frame-name" style="color:#ffd700">Gold</span></div>
-                        <div class="frame-item" data-frame="comic" style="border: 4px solid #000; box-shadow: 4px 4px 0 #ff0;"><span class="frame-name" style="color:#000">Comic</span></div>
-                        <div class="frame-item" data-frame="holo" style="background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);"><span class="frame-name">Holo</span></div>
-                        <div class="frame-item" data-frame="ticket" style="background: #e94560; border: 2px dashed #fff;"><span class="frame-name">Ticket</span></div>
-                        <div class="frame-item" data-frame="denim" style="background: #2b4f81; border: 2px solid #f0a500;"><span class="frame-name">Denim</span></div>
-                        <div class="frame-item" data-frame="starry" style="background: #000; border: 1px solid #ffd700;"><span class="frame-name">Starry</span></div>
-                        <div class="frame-item" data-frame="cybercity" style="background: linear-gradient(to top, #1a1a2e, #16213e);"><span class="frame-name">City</span></div>
-                        <div class="frame-item" data-frame="graffiti" style="background: #333; border: 2px solid #00ff00;"><span class="frame-name">Graffiti</span></div>
-                        <div class="frame-item" data-frame="space" style="background: #0b0d17;"><span class="frame-name">Space</span></div>
-                    </div>
+                </section>
+                <div class="shoot-actions">
+                    <button class="start-btn" id="start-btn">Start Session</button>
+                    <div class="ready-badge" id="ready-badge">Face Detected & Ready!</div>
                 </div>
             </div>
+        </div>
 
-            <div class="preview-container">
-                <video id="webcam-video" autoplay playsinline muted></video>
-                <canvas id="ar-canvas"></canvas>
-                <div class="countdown-overlay" id="countdown-text">3</div>
-                <div class="flash-overlay" id="flash"></div>
-                <div class="status-indicator" id="shoot-status">Photo 1 of 4</div>
-                <div class="review-controls" id="review-controls">
-                    <button class="review-btn retake-shot" id="retake-shot-btn">Retake</button>
-                    <button class="review-btn next-shot" id="next-shot-btn">Keep & Next</button>
-                </div>
-            </div>
+        <!-- SLIDE 3: RESULT -->
+        <div class="slide" id="slide-3">
+            <div class="result-grid">
+                <section class="panel result-panel">
+                    <h2 class="panel-title">Your Photo Strip</h2>
+                    <div id="strip-canvas-container">
+                        <canvas id="strip-canvas"></canvas>
+                    </div>
+                    <div class="action-buttons">
+                        <button class="action-btn download-btn" id="download-btn">Save Strip</button>
+                        <button class="action-btn gif-btn" id="gif-btn">GIF</button>
+                        <button class="action-btn retake-btn" id="retake-btn">Start New</button>
+                    </div>
+                </section>
 
-            <button class="start-btn" id="start-btn">Start Shoot</button>
-        </section>
-
-        <!-- Right Panel: Result Strip -->
-        <section class="panel right-panel">
-            <h2 class="strip-preview-title">Your Strip</h2>
-            <div id="strip-canvas-container">
-                <canvas id="strip-canvas"></canvas>
+                <section class="panel gallery-panel">
+                    <h2 class="panel-title">Individual Photos</h2>
+                    <button class="action-btn download-btn" id="download-all-btn" style="margin-bottom: 15px; font-size: 0.8rem; padding: 10px;">Download All (Zip/Batch)</button>
+                    <div class="gallery-grid" id="gallery-grid"></div>
+                </section>
             </div>
-            <div class="ready-badge" id="ready-badge">✦ Strip Ready</div>
-            <div class="action-buttons">
-                <button class="action-btn download-btn" id="download-btn">Strip</button>
-                <button class="action-btn action-btn download-btn gif-btn" id="gif-btn">GIF</button>
-                <button class="action-btn retake-btn" id="retake-btn">Retake</button>
-            </div>
-
-            <!-- Individual Gallery -->
-            <div class="gallery-container" id="gallery-container">
-                <div class="gallery-title">Individual Photos (No Frame)</div>
-                <button class="action-btn download-btn" id="download-all-btn" style="margin-bottom: 15px; font-size: 0.8rem; padding: 10px;">Download All Photos</button>
-                <div class="gallery-grid" id="gallery-grid">
-                    <!-- Thumbnails go here -->
-                </div>
-            </div>
-        </section>
+        </div>
     </main>
 
     <!-- External Libraries -->
