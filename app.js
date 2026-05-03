@@ -899,19 +899,19 @@ async function downloadGIF() {
     gifBtn.disabled = true;
 
     try {
-        // Pre-resize images to be very small for GIF stability
+        // Higher resolution for better quality (400px is the sweet spot)
         const resizedImages = capturedPhotos.map(img => {
             const canvas = document.createElement('canvas');
-            const targetW = 240; // Smaller width for better stability
+            const targetW = 400; 
             canvas.width = targetW; 
             canvas.height = Math.round(targetW * (img.height / img.width));
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-            return canvas.toDataURL('image/jpeg', 0.5); 
+            return canvas.toDataURL('image/jpeg', 0.6); 
         });
         
-        const gifW = 240;
-        const gifH = Math.round(240 * (capturedPhotos[0].height / capturedPhotos[0].width));
+        const gifW = 400;
+        const gifH = Math.round(400 * (capturedPhotos[0].height / capturedPhotos[0].width));
 
         gifLib.createGIF({
             images: resizedImages,
@@ -920,7 +920,7 @@ async function downloadGIF() {
             interval: 0.3,
             numFrames: resizedImages.length,
             frameDuration: 1,
-            sampleInterval: 20,
+            sampleInterval: 25, 
             numWorkers: 2 
         }, function (obj) {
             if (!obj.error) {
