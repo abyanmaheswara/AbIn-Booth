@@ -4,451 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AbIn Booth | Cyberpunk Photo Experience</title>
-    <meta name="description" content="A futuristic photo booth experience by Abyan & Intan. Capture cyberpunk-styled photo strips with AR stickers and neon effects.">
+    <meta name="description" content="A futuristic photo booth experience. Capture cyberpunk-styled photo strips with AR stickers and neon effects.">
+    
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Space+Grotesk:wght@400;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg-color: #0D0B14;
-            --accent-pink: #FF2D78;
-            --highlight-pink: #FF6EA8;
-            --dark-pink: #4D0E29;
-            --text-color: #FFFFFF;
-            --muted-pink: #B54E75;
-            --neon-glow: 0 0 10px rgba(255, 45, 120, 0.5), 0 0 20px rgba(255, 45, 120, 0.3);
-            --neon-glow-strong: 0 0 15px rgba(255, 45, 120, 0.8), 0 0 30px rgba(255, 45, 120, 0.5);
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            font-family: 'Space Grotesk', sans-serif;
-            background-image: 
-                linear-gradient(rgba(255, 45, 120, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 45, 120, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { background-position: 0 0; }
-            100% { background-position: 40px 40px; }
-        }
-
-        /* CRT Scanline Effect */
-        body::after {
-            content: " ";
-            display: block;
-            position: fixed;
-            top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.1) 50%), 
-                        linear-gradient(90deg, rgba(255, 0, 0, 0.02), rgba(0, 255, 0, 0.01), rgba(0, 0, 255, 0.02));
-            z-index: 9999;
-            background-size: 100% 4px, 3px 100%;
-            pointer-events: none;
-            opacity: 0.3;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 20px 20px;
-            width: 100%;
-        }
-
-        h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3.5rem;
-            color: var(--accent-pink);
-            text-transform: uppercase;
-            letter-spacing: 4px;
-            text-shadow: var(--neon-glow-strong);
-            margin-bottom: 5px;
-            animation: titleGlitch 5s infinite;
-        }
-
-        @keyframes titleGlitch {
-            0%, 90%, 100% { transform: skew(0); text-shadow: var(--neon-glow-strong); }
-            91% { transform: skew(2deg); text-shadow: 2px 0 cyan, -2px 0 var(--accent-pink); }
-            93% { transform: skew(-1deg); }
-            95% { transform: skew(3deg); text-shadow: -2px 0 cyan, 2px 0 var(--accent-pink); }
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: var(--muted-pink);
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .app-container {
-            display: flex;
-            gap: 30px;
-            padding: 20px;
-            max-width: 1200px;
-            width: 100%;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
-
-        .panel {
-            background: rgba(20, 18, 28, 0.8);
-            border: 1px solid var(--accent-pink);
-            border-radius: 12px;
-            padding: 20px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
-            position: relative;
-        }
-
-        .left-panel {
-            flex: 1.5;
-            min-width: 500px;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .right-panel {
-            flex: 1;
-            min-width: 320px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: flex-start;
-        }
-
-        /* Controls */
-        .controls-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-
-        .control-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .control-label {
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            color: var(--muted-pink);
-            font-weight: bold;
-        }
-
-        .button-group {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-        }
-
-        .toggle-btn {
-            background: transparent;
-            border: 1px solid var(--muted-pink);
-            color: var(--muted-pink);
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            font-family: 'Space Grotesk', sans-serif;
-        }
-
-        .toggle-btn.active {
-            border-color: var(--accent-pink);
-            color: var(--accent-pink);
-            background: rgba(255, 45, 120, 0.1);
-            box-shadow: 0 0 10px rgba(255, 45, 120, 0.3);
-        }
-
-        .toggle-btn:hover {
-            border-color: var(--highlight-pink);
-            color: var(--highlight-pink);
-        }
-
-        .preview-container {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 4/3;
-            background: #000;
-            border-radius: 8px;
-            overflow: hidden;
-            border: 2px solid #221F2B;
-            box-shadow: inset 0 0 100px rgba(0,0,0,0.8); /* Vignette */
-        }
-
-        .preview-container::after {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            box-shadow: inset 0 0 80px rgba(0,0,0,0.6);
-            pointer-events: none;
-        }
-
-        #webcam-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transform: scaleX(-1); /* Mirror */
-        }
-
-        #ar-canvas {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            transform: scaleX(-1); /* Mirror to match video */
-        }
-
-        .countdown-overlay {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 8rem;
-            color: var(--accent-pink);
-            text-shadow: var(--neon-glow-strong);
-            display: none;
-            z-index: 10;
-        }
-
-        .flash-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: white;
-            opacity: 0;
-            pointer-events: none;
-            z-index: 20;
-        }
-
-        .status-indicator {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: rgba(0, 0, 0, 0.6);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            border: 1px solid var(--accent-pink);
-            color: var(--accent-pink);
-            font-weight: bold;
-            display: none;
-        }
-
-        .start-btn {
-            background: transparent;
-            border: 2px solid var(--accent-pink);
-            color: var(--accent-pink);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            padding: 15px 40px;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: var(--neon-glow);
-            width: 100%;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        .start-btn:hover {
-            background: var(--accent-pink);
-            color: white;
-            box-shadow: var(--neon-glow-strong);
-        }
-
-        .start-btn:disabled {
-            border-color: #444;
-            color: #444;
-            box-shadow: none;
-            cursor: not-allowed;
-        }
-
-        /* Right Panel - Strip Preview */
-        .strip-preview-title {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--highlight-pink);
-            margin-bottom: 20px;
-            font-size: 1.2rem;
-            text-align: center;
-        }
-
-        #strip-canvas-container {
-            width: 100%;
-            max-width: 300px;
-            background: #1a1a1a;
-            border-radius: 4px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            display: flex;
-            justify-content: center;
-            min-height: 400px;
-            border: 1px solid #333;
-        }
-
-        #strip-canvas {
-            max-width: 100%;
-            height: auto;
-        }
-
-        .action-buttons {
-            display: flex;
-            gap: 10px;
-            width: 100%;
-            margin-top: 20px;
-        }
-
-        .action-btn {
-            flex: 1;
-            padding: 12px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-family: 'Space Grotesk', sans-serif;
-            font-weight: bold;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            display: none;
-        }
-
-        .download-btn {
-            background: var(--accent-pink);
-            border: none;
-            color: white;
-        }
-
-        .retake-btn {
-            background: transparent;
-            border: 1px solid var(--muted-pink);
-            color: var(--muted-pink);
-        }
-
-        .download-btn:hover {
-            background: var(--highlight-pink);
-            transform: translateY(-2px);
-        }
-
-        .retake-btn:hover {
-            border-color: var(--accent-pink);
-            color: var(--accent-pink);
-        }
-
-        /* Stickers Thumbnails */
-        .sticker-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 10px;
-        }
-
-        .sticker-toggle {
-            aspect-ratio: 1;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.5rem;
-            transition: all 0.3s ease;
-        }
-
-        .sticker-toggle.active {
-            border-color: var(--accent-pink);
-            background: rgba(255, 45, 120, 0.1);
-            box-shadow: 0 0 10px rgba(255, 45, 120, 0.2);
-        }
-
-        /* Frame Thumbnails */
-        .frame-grid {
-            display: grid;
-            grid-template-columns: repeat(5, 1fr);
-            gap: 8px;
-        }
-
-        .frame-item {
-            aspect-ratio: 3/4;
-            background: #1a1a1a;
-            border: 1px solid #333;
-            border-radius: 4px;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .frame-item.active {
-            border-color: var(--accent-pink);
-            box-shadow: 0 0 10px rgba(255, 45, 120, 0.3);
-        }
-
-        .frame-name {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            font-size: 0.6rem;
-            text-align: center;
-            background: rgba(0,0,0,0.7);
-            padding: 2px 0;
-        }
-
-        /* Animations */
-        @keyframes ready-glow {
-            0% { transform: scale(1); opacity: 0.8; }
-            50% { transform: scale(1.1); opacity: 1; text-shadow: 0 0 20px var(--accent-pink); }
-            100% { transform: scale(1); opacity: 0.8; }
-        }
-
-        .ready-badge {
-            margin-top: 15px;
-            color: var(--accent-pink);
-            font-family: 'Orbitron', sans-serif;
-            display: none;
-            animation: ready-glow 2s infinite ease-in-out;
-        }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .app-container {
-                flex-direction: column;
-            }
-            .left-panel, .right-panel {
-                min-width: 100%;
-            }
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Space+Grotesk:wght@400;700&family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    
+    <!-- External Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gifshot/0.4.5/gifshot.min.js"></script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <header>
         <h1>AbIn Booth</h1>
-        <div class="subtitle">by Abyan & Intan</div>
     </header>
 
     <main class="app-container">
         <!-- Left Panel: Settings & Webcam -->
         <section class="panel left-panel">
             <div class="controls-grid">
+                <!-- Layout Controls -->
                 <div class="control-group">
                     <span class="control-label">Strip Layout</span>
                     <div class="button-group" id="layout-controls">
@@ -457,6 +35,19 @@
                         <button class="toggle-btn active" data-value="4">4 Photos</button>
                     </div>
                 </div>
+                
+                <!-- Ratio Controls -->
+                <div class="control-group">
+                    <span class="control-label">Photo Ratio</span>
+                    <div class="button-group" id="ratio-controls">
+                        <button class="toggle-btn" data-value="1:1">1:1 Square</button>
+                        <button class="toggle-btn active" data-value="4:3">4:3 Std</button>
+                        <button class="toggle-btn" data-value="3:4">3:4 Tall</button>
+                        <button class="toggle-btn" data-value="2:3">2:3 Classic</button>
+                    </div>
+                </div>
+
+                <!-- Timer Controls -->
                 <div class="control-group">
                     <span class="control-label">Countdown</span>
                     <div class="button-group" id="timer-controls">
@@ -465,6 +56,8 @@
                         <button class="toggle-btn" data-value="10">10s</button>
                     </div>
                 </div>
+
+                <!-- AR Sticker Controls -->
                 <div class="control-group" style="grid-column: span 2;">
                     <span class="control-label">AR Stickers</span>
                     <div class="sticker-grid" id="sticker-controls">
@@ -472,8 +65,11 @@
                         <div class="sticker-toggle" data-sticker="stars" title="Sparkle Stars">✨</div>
                         <div class="sticker-toggle" data-sticker="hearts" title="Heart Eyes">❤️</div>
                         <div class="sticker-toggle" data-sticker="crown" title="Glitch Crown">👑</div>
+                        <div class="sticker-toggle" data-sticker="glasses" title="Cyber Sunglasses">🕶️</div>
                     </div>
                 </div>
+
+                <!-- Filter Controls -->
                 <div class="control-group" style="grid-column: span 2;">
                     <span class="control-label">Live Filters</span>
                     <div class="button-group" id="filter-controls">
@@ -486,6 +82,8 @@
                         <button class="toggle-btn" data-filter="neon">Neon</button>
                     </div>
                 </div>
+
+                <!-- Frame Theme Controls -->
                 <div class="control-group" style="grid-column: span 2;">
                     <span class="control-label">Frame Theme</span>
                     <div class="frame-grid" id="frame-controls">
@@ -498,6 +96,18 @@
                         <div class="frame-item" data-frame="retro" style="background: linear-gradient(to bottom, #ff0080, #7928ca);"><span class="frame-name">Retro</span></div>
                         <div class="frame-item" data-frame="sakura" style="border: 2px solid #ffb7c5;"><span class="frame-name">Sakura</span></div>
                         <div class="frame-item" data-frame="minimal" style="border: 1px solid white; outline: 1px solid white; outline-offset: -4px;"><span class="frame-name">Minimal</span></div>
+                        <div class="frame-item" data-frame="y2k" style="background: linear-gradient(135deg, #e0e0e0, #bdbdbd); border: 2px outset #fff;"><span class="frame-name" style="color:#000">Y2K</span></div>
+                        <div class="frame-item" data-frame="manga" style="border: 3px solid #000; background: #fff;"><span class="frame-name" style="color:#000">Manga</span></div>
+                        <div class="frame-item" data-frame="vapor" style="background: linear-gradient(to right, #00d2ff, #928dab);"><span class="frame-name">Vapor</span></div>
+                        <div class="frame-item" data-frame="luxury" style="border: 3px double #ffd700; background: #000;"><span class="frame-name" style="color:#ffd700">Gold</span></div>
+                        <div class="frame-item" data-frame="comic" style="border: 4px solid #000; box-shadow: 4px 4px 0 #ff0;"><span class="frame-name" style="color:#000">Comic</span></div>
+                        <div class="frame-item" data-frame="holo" style="background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff);"><span class="frame-name">Holo</span></div>
+                        <div class="frame-item" data-frame="ticket" style="background: #e94560; border: 2px dashed #fff;"><span class="frame-name">Ticket</span></div>
+                        <div class="frame-item" data-frame="denim" style="background: #2b4f81; border: 2px solid #f0a500;"><span class="frame-name">Denim</span></div>
+                        <div class="frame-item" data-frame="starry" style="background: #000; border: 1px solid #ffd700;"><span class="frame-name">Starry</span></div>
+                        <div class="frame-item" data-frame="cybercity" style="background: linear-gradient(to top, #1a1a2e, #16213e);"><span class="frame-name">City</span></div>
+                        <div class="frame-item" data-frame="graffiti" style="background: #333; border: 2px solid #00ff00;"><span class="frame-name">Graffiti</span></div>
+                        <div class="frame-item" data-frame="space" style="background: #0b0d17;"><span class="frame-name">Space</span></div>
                     </div>
                 </div>
             </div>
@@ -508,6 +118,10 @@
                 <div class="countdown-overlay" id="countdown-text">3</div>
                 <div class="flash-overlay" id="flash"></div>
                 <div class="status-indicator" id="shoot-status">Photo 1 of 4</div>
+                <div class="review-controls" id="review-controls">
+                    <button class="review-btn retake-shot" id="retake-shot-btn">Retake</button>
+                    <button class="review-btn next-shot" id="next-shot-btn">Keep & Next</button>
+                </div>
             </div>
 
             <button class="start-btn" id="start-btn">Start Shoot</button>
@@ -521,592 +135,22 @@
             </div>
             <div class="ready-badge" id="ready-badge">✦ Strip Ready</div>
             <div class="action-buttons">
-                <button class="action-btn download-btn" id="download-btn">Download PNG</button>
+                <button class="action-btn download-btn" id="download-btn">Strip</button>
+                <button class="action-btn action-btn download-btn gif-btn" id="gif-btn">GIF</button>
                 <button class="action-btn retake-btn" id="retake-btn">Retake</button>
+            </div>
+
+            <!-- Individual Gallery -->
+            <div class="gallery-container" id="gallery-container">
+                <div class="gallery-title">Individual Frames</div>
+                <div class="gallery-grid" id="gallery-grid">
+                    <!-- Thumbnails go here -->
+                </div>
             </div>
         </section>
     </main>
 
-    <script type="module">
-        import {
-            FaceLandmarker,
-            FilesetResolver
-        } from "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3";
-
-        // Constants & State
-        const video = document.getElementById('webcam-video');
-        const arCanvas = document.getElementById('ar-canvas');
-        const arCtx = arCanvas.getContext('2d');
-        const stripCanvas = document.getElementById('strip-canvas');
-        const stripCtx = stripCanvas.getContext('2d');
-        
-        const startBtn = document.getElementById('start-btn');
-        const countdownText = document.getElementById('countdown-text');
-        const flashOverlay = document.getElementById('flash');
-        const shootStatus = document.getElementById('shoot-status');
-        const readyBadge = document.getElementById('ready-badge');
-        const downloadBtn = document.getElementById('download-btn');
-        const retakeBtn = document.getElementById('retake-btn');
-
-        let faceLandmarker;
-        let runningMode = "IMAGE";
-        let lastVideoTime = -1;
-        let results = undefined;
-        let stream = null;
-        
-        let config = {
-            layout: 4,
-            timer: 3,
-            filter: 'normal',
-            frame: 'neon',
-            stickers: {
-                bunny: false,
-                stars: false,
-                hearts: false,
-                crown: false
-            }
-        };
-
-        const filterStyles = {
-            normal: 'none',
-            bw: 'grayscale(100%)',
-            vintage: 'sepia(0.8) contrast(0.9)',
-            soft: 'brightness(1.1) blur(1px)',
-            vivid: 'saturate(1.5) contrast(1.1)',
-            noir: 'grayscale(100%) contrast(150%)',
-            neon: 'hue-rotate(300deg) saturate(200%)'
-        };
-
-        let capturedPhotos = [];
-        let isShooting = false;
-
-        // --- Audio Engine ---
-        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        
-        const playBeep = () => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'sine';
-            osc.frequency.setValueAtTime(880, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.1, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.1);
-        };
-
-        const playShutter = () => {
-            const bufferSize = audioCtx.sampleRate * 0.1;
-            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
-            const data = buffer.getChannelData(0);
-            for (let i = 0; i < bufferSize; i++) data[i] = Math.random() * 2 - 1;
-            const noise = audioCtx.createBufferSource();
-            noise.buffer = buffer;
-            const gain = audioCtx.createGain();
-            gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.1);
-            noise.connect(gain);
-            gain.connect(audioCtx.destination);
-            noise.start();
-        };
-
-        const playChime = () => {
-            const notes = [440, 554.37, 659.25];
-            notes.forEach((freq, i) => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime + i * 0.15);
-                gain.gain.setValueAtTime(0, audioCtx.currentTime + i * 0.15);
-                gain.gain.linearRampToValueAtTime(0.1, audioCtx.currentTime + i * 0.15 + 0.05);
-                gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + i * 0.15 + 0.3);
-                osc.connect(gain);
-                gain.connect(audioCtx.destination);
-                osc.start(audioCtx.currentTime + i * 0.15);
-                osc.stop(audioCtx.currentTime + i * 0.15 + 0.3);
-            });
-        };
-
-        const playClick = () => {
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            osc.type = 'square';
-            osc.frequency.setValueAtTime(150, audioCtx.currentTime);
-            gain.gain.setValueAtTime(0.05, audioCtx.currentTime);
-            gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.05);
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            osc.start();
-            osc.stop(audioCtx.currentTime + 0.05);
-        };
-
-        // --- Initialization ---
-        async function init() {
-            const vision = await FilesetResolver.forVisionTasks(
-                "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.3/wasm"
-            );
-            faceLandmarker = await FaceLandmarker.createFromOptions(vision, {
-                baseOptions: {
-                    modelAssetPath: `https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task`,
-                    delegate: "GPU"
-                },
-                outputFaceBlendshapes: true,
-                runningMode: "VIDEO",
-                numFaces: 1
-            });
-
-            setupWebcam();
-            setupControls();
-        }
-
-        async function setupWebcam() {
-            try {
-                stream = await navigator.mediaDevices.getUserMedia({ 
-                    video: { width: 1280, height: 720 },
-                    audio: false 
-                });
-                video.srcObject = stream;
-                video.addEventListener('loadeddata', predictWebcam);
-            } catch (err) {
-                console.error("Webcam error:", err);
-                alert("Please allow camera access to use AbIn Booth!");
-            }
-        }
-
-        function setupControls() {
-            // Layout
-            document.querySelectorAll('#layout-controls button').forEach(btn => {
-                btn.onclick = () => {
-                    playClick();
-                    document.querySelector('#layout-controls .active').classList.remove('active');
-                    btn.classList.add('active');
-                    config.layout = parseInt(btn.dataset.value);
-                };
-            });
-
-            // Timer
-            document.querySelectorAll('#timer-controls button').forEach(btn => {
-                btn.onclick = () => {
-                    playClick();
-                    document.querySelector('#timer-controls .active').classList.remove('active');
-                    btn.classList.add('active');
-                    config.timer = parseInt(btn.dataset.value);
-                };
-            });
-
-            // Stickers
-            document.querySelectorAll('.sticker-toggle').forEach(btn => {
-                btn.onclick = () => {
-                    playClick();
-                    btn.classList.toggle('active');
-                    config.stickers[btn.dataset.sticker] = btn.classList.contains('active');
-                };
-            });
-
-            // Filters
-            document.querySelectorAll('#filter-controls button').forEach(btn => {
-                btn.onclick = () => {
-                    playClick();
-                    document.querySelector('#filter-controls .active').classList.remove('active');
-                    btn.classList.add('active');
-                    config.filter = btn.dataset.filter;
-                    video.style.filter = filterStyles[config.filter];
-                };
-            });
-
-            // Frames
-            document.querySelectorAll('.frame-item').forEach(btn => {
-                btn.onclick = () => {
-                    playClick();
-                    document.querySelector('.frame-item.active').classList.remove('active');
-                    btn.classList.add('active');
-                    config.frame = btn.dataset.frame;
-                };
-            });
-
-            startBtn.onclick = startShootSequence;
-            downloadBtn.onclick = downloadStrip;
-            retakeBtn.onclick = resetBooth;
-        }
-
-        // --- AR Logic ---
-        async function predictWebcam() {
-            if (video.currentTime !== lastVideoTime) {
-                lastVideoTime = video.currentTime;
-                results = faceLandmarker.detectForVideo(video, performance.now());
-            }
-
-            drawAR();
-            window.requestAnimationFrame(predictWebcam);
-        }
-
-        function drawAR() {
-            arCtx.clearRect(0, 0, arCanvas.width, arCanvas.height);
-            if (!results || !results.faceLandmarks || results.faceLandmarks.length === 0) return;
-
-            const landmarks = results.faceLandmarks[0];
-            const w = arCanvas.width;
-            const h = arCanvas.height;
-
-            if (config.stickers.bunny) drawBunnyEars(landmarks, w, h, arCtx);
-            if (config.stickers.stars) drawStars(landmarks, w, h, arCtx);
-            if (config.stickers.hearts) drawHearts(landmarks, w, h, arCtx);
-            if (config.stickers.crown) drawCrown(landmarks, w, h, arCtx);
-        }
-
-        // Consolidated drawing functions
-        function drawBunnyEars(lm, w, h, ctx) {
-            const top = lm[10];
-            const headSize = Math.abs(lm[332].x - lm[103].x) * w;
-            ctx.save();
-            ctx.strokeStyle = '#FF2D78';
-            ctx.lineWidth = headSize * 0.08;
-            ctx.lineCap = 'round';
-            ctx.shadowBlur = 15;
-            ctx.shadowColor = '#FF2D78';
-            
-            // Left Ear
-            ctx.beginPath();
-            ctx.moveTo((top.x - 0.05) * w, top.y * h);
-            ctx.bezierCurveTo((top.x - 0.15) * w, (top.y - 0.3) * h, (top.x + 0.05) * w, (top.y - 0.3) * h, (top.x) * w, (top.y - 0.05) * h);
-            ctx.stroke();
-
-            // Right Ear
-            ctx.beginPath();
-            ctx.moveTo((top.x + 0.05) * w, top.y * h);
-            ctx.bezierCurveTo((top.x + 0.15) * w, (top.y - 0.3) * h, (top.x - 0.05) * w, (top.y - 0.3) * h, (top.x) * w, (top.y - 0.05) * h);
-            ctx.stroke();
-            ctx.restore();
-        }
-
-        function drawStars(lm, w, h, ctx) {
-            const facePoints = [10, 338, 21, 152, 127, 234];
-            ctx.save();
-            ctx.fillStyle = '#FF6EA8';
-            ctx.shadowBlur = 10;
-            ctx.shadowColor = '#FF6EA8';
-            facePoints.forEach((idx, i) => {
-                const p = lm[idx];
-                const time = performance.now() * 0.005;
-                const offset = ctx === arCtx ? Math.sin(time + i) * 10 : 0; // Only animate in preview
-                drawStarShape(ctx, p.x * w + offset, p.y * h - 20 + offset, 5, 8, 4);
-            });
-            ctx.restore();
-        }
-
-        function drawStarShape(ctx, cx, cy, spikes, outerRadius, innerRadius) {
-            let rot = Math.PI / 2 * 3, x = cx, y = cy, step = Math.PI / spikes;
-            ctx.beginPath(); ctx.moveTo(cx, cy - outerRadius);
-            for (let i = 0; i < spikes; i++) {
-                x = cx + Math.cos(rot) * outerRadius; y = cy + Math.sin(rot) * outerRadius; ctx.lineTo(x, y); rot += step;
-                x = cx + Math.cos(rot) * innerRadius; y = cy + Math.sin(rot) * innerRadius; ctx.lineTo(x, y); rot += step;
-            }
-            ctx.lineTo(cx, cy - outerRadius); ctx.closePath(); ctx.fill();
-        }
-
-        function drawHearts(lm, w, h, ctx) {
-            const leftEye = lm[468] || lm[159];
-            const rightEye = lm[473] || lm[386];
-            ctx.save();
-            [leftEye, rightEye].forEach(eye => { if (eye) drawHeartShape(ctx, eye.x * w, eye.y * h, 15); });
-            ctx.restore();
-        }
-
-        function drawHeartShape(ctx, x, y, size) {
-            ctx.fillStyle = '#FF2D78'; ctx.shadowBlur = 10; ctx.shadowColor = '#FF2D78';
-            ctx.beginPath(); ctx.moveTo(x, y);
-            ctx.bezierCurveTo(x, y - size/2, x - size, y - size/2, x - size, y);
-            ctx.bezierCurveTo(x - size, y + size/2, x, y + size, x, y + size);
-            ctx.bezierCurveTo(x, y + size, x + size, y + size/2, x + size, y);
-            ctx.bezierCurveTo(x + size, y - size/2, x, y - size/2, x, y);
-            ctx.fill();
-        }
-
-        function drawCrown(lm, w, h, ctx) {
-            const top = lm[10]; const size = 100;
-            ctx.save();
-            ctx.strokeStyle = '#FF2D78'; ctx.lineWidth = 4; ctx.shadowBlur = 15; ctx.shadowColor = '#FF2D78';
-            const x = top.x * w - size/2, y = top.y * h - size * 0.8;
-            ctx.beginPath(); ctx.moveTo(x, y + size/2); ctx.lineTo(x, y); ctx.lineTo(x + size*0.25, y + size*0.3);
-            ctx.lineTo(x + size*0.5, y); ctx.lineTo(x + size*0.75, y + size*0.3); ctx.lineTo(x + size, y);
-            ctx.lineTo(x + size, y + size/2); ctx.closePath(); ctx.stroke();
-            
-            // Glitch effect
-            if (ctx === arCtx && Math.random() > 0.8) {
-                ctx.strokeStyle = 'cyan';
-                ctx.strokeRect(x - 5, y, size, size/2);
-            }
-            ctx.restore();
-        }
-
-        // --- Sequence Logic ---
-        async function startShootSequence() {
-            if (isShooting) return;
-            isShooting = true;
-            capturedPhotos = [];
-            startBtn.disabled = true;
-            shootStatus.style.display = 'block';
-            readyBadge.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            retakeBtn.style.display = 'none';
-            
-            // Clear previous strip
-            stripCtx.clearRect(0, 0, stripCanvas.width, stripCanvas.height);
-
-            for (let i = 0; i < config.layout; i++) {
-                shootStatus.innerText = `Photo ${i + 1} of ${config.layout}`;
-                await runCountdown();
-                capturePhoto();
-                playShutter();
-                triggerFlash();
-                await new Promise(r => setTimeout(r, 1000)); // Delay between shots
-            }
-
-            finalizeStrip();
-            isShooting = false;
-            startBtn.disabled = false;
-            startBtn.innerText = "Shoot Again";
-            shootStatus.style.display = 'none';
-            readyBadge.style.display = 'block';
-            downloadBtn.style.display = 'block';
-            retakeBtn.style.display = 'block';
-            playChime();
-        }
-
-        function runCountdown() {
-            return new Promise(resolve => {
-                let count = config.timer;
-                countdownText.style.display = 'block';
-                countdownText.innerText = count;
-                playBeep();
-
-                const timer = setInterval(() => {
-                    count--;
-                    if (count <= 0) {
-                        clearInterval(timer);
-                        countdownText.style.display = 'none';
-                        resolve();
-                    } else {
-                        countdownText.innerText = count;
-                        playBeep();
-                    }
-                }, 1000);
-            });
-        }
-
-        function triggerFlash() {
-            flashOverlay.style.opacity = '1';
-            setTimeout(() => {
-                flashOverlay.style.opacity = '0';
-            }, 100);
-        }
-
-        function capturePhoto() {
-            const tempCanvas = document.createElement('canvas');
-            tempCanvas.width = video.videoWidth;
-            tempCanvas.height = video.videoHeight;
-            const tempCtx = tempCanvas.getContext('2d');
-            
-            // Mirror
-            tempCtx.translate(tempCanvas.width, 0);
-            tempCtx.scale(-1, 1);
-            
-            // Apply filter
-            tempCtx.filter = filterStyles[config.filter];
-            tempCtx.drawImage(video, 0, 0);
-            
-            // Draw AR stickers onto the captured photo
-            if (results && results.faceLandmarks && results.faceLandmarks.length > 0) {
-                if (config.stickers.bunny) drawBunnyEars(results.faceLandmarks[0], tempCanvas.width, tempCanvas.height, tempCtx);
-                if (config.stickers.stars) drawStars(results.faceLandmarks[0], tempCanvas.width, tempCanvas.height, tempCtx);
-                if (config.stickers.hearts) drawHearts(results.faceLandmarks[0], tempCanvas.width, tempCanvas.height, tempCtx);
-                if (config.stickers.crown) drawCrown(results.faceLandmarks[0], tempCanvas.width, tempCanvas.height, tempCtx);
-            }
-            
-            capturedPhotos.push(tempCanvas.toDataURL('image/png'));
-            updateStripPreview();
-        }
-
-        // --- Strip Assembly ---
-        function updateStripPreview() {
-            const photoW = 400;
-            const photoH = 300;
-            const margin = 20;
-            const footerH = 60;
-            
-            stripCanvas.width = photoW + (margin * 2);
-            stripCanvas.height = (photoH * capturedPhotos.length) + (margin * (capturedPhotos.length + 1)) + footerH;
-            
-            stripCtx.fillStyle = '#0D0B14';
-            stripCtx.fillRect(0, 0, stripCanvas.width, stripCanvas.height);
-            
-            capturedPhotos.forEach((src, i) => {
-                const img = new Image();
-                img.onload = () => {
-                    const x = margin;
-                    const y = margin + (i * (photoH + margin));
-                    
-                    // Draw photo
-                    stripCtx.drawImage(img, x, y, photoW, photoH);
-                    
-                    // Apply frame
-                    drawFrame(x, y, photoW, photoH, stripCtx);
-                    
-                    // If last photo, draw footer
-                    if (i === capturedPhotos.length - 1) drawFooter();
-                };
-                img.src = src;
-            });
-        }
-
-        function finalizeStrip() {
-            updateStripPreview();
-        }
-
-        function drawFrame(x, y, w, h, ctx) {
-            ctx.save();
-            switch(config.frame) {
-                case 'neon':
-                    ctx.strokeStyle = '#FF2D78';
-                    ctx.lineWidth = 4;
-                    ctx.shadowBlur = 10;
-                    ctx.shadowColor = '#FF2D78';
-                    ctx.strokeRect(x, y, w, h);
-                    break;
-                case 'grid':
-                    ctx.strokeStyle = 'rgba(255, 45, 120, 0.3)';
-                    ctx.lineWidth = 1;
-                    for (let i = 10; i < w; i += 20) {
-                        ctx.beginPath(); ctx.moveTo(x + i, y); ctx.lineTo(x + i, y + h); ctx.stroke();
-                    }
-                    for (let i = 10; i < h; i += 20) {
-                        ctx.beginPath(); ctx.moveTo(x, y + i); ctx.lineTo(x + w, y + i); ctx.stroke();
-                    }
-                    ctx.strokeStyle = '#333';
-                    ctx.strokeRect(x, y, w, h);
-                    break;
-                case 'film':
-                    ctx.fillStyle = '#111';
-                    ctx.fillRect(x - 10, y, 10, h);
-                    ctx.fillRect(x + w, y, 10, h);
-                    ctx.fillStyle = '#333';
-                    for (let i = 5; i < h; i += 20) {
-                        ctx.fillRect(x - 8, y + i, 6, 10);
-                        ctx.fillRect(x + w + 2, y + i, 6, 10);
-                    }
-                    break;
-                case 'polaroid':
-                    ctx.strokeStyle = 'white';
-                    ctx.lineWidth = 15;
-                    ctx.strokeRect(x + 7.5, y + 7.5, w - 15, h - 15);
-                    break;
-                case 'glitch':
-                    ctx.strokeStyle = '#FF2D78';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(x, y, w, h);
-                    ctx.strokeStyle = 'cyan';
-                    ctx.strokeRect(x + 3, y + 3, w, h);
-                    break;
-                case 'cyber':
-                    ctx.strokeStyle = 'cyan';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(x, y, w, h);
-                    // Tech Brackets
-                    ctx.lineWidth = 4;
-                    ctx.beginPath();
-                    ctx.moveTo(x + 30, y); ctx.lineTo(x, y); ctx.lineTo(x, y + 30);
-                    ctx.moveTo(x + w - 30, y); ctx.lineTo(x + w, y); ctx.lineTo(x + w, y + 30);
-                    ctx.moveTo(x + 30, y + h); ctx.lineTo(x, y + h); ctx.lineTo(x, y + h - 30);
-                    ctx.moveTo(x + w - 30, y + h); ctx.lineTo(x + w, y + h); ctx.lineTo(x + w, y + h - 30);
-                    ctx.stroke();
-                    // Scanned info
-                    ctx.fillStyle = 'cyan';
-                    ctx.font = '8px Space Grotesk';
-                    ctx.fillText('REC // SCANNING...', x + 10, y + 15);
-                    break;
-                case 'retro':
-                    // Tint layer
-                    ctx.globalAlpha = 0.3;
-                    const sunGrad = ctx.createLinearGradient(x, y, x, y + h);
-                    sunGrad.addColorStop(0, '#ff0080');
-                    sunGrad.addColorStop(1, '#7928ca');
-                    ctx.fillStyle = sunGrad;
-                    ctx.fillRect(x, y, w, h);
-                    ctx.globalAlpha = 1.0;
-                    
-                    // Scanlines
-                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
-                    ctx.lineWidth = 1;
-                    for (let i = 0; i < h; i += 6) {
-                        ctx.beginPath(); ctx.moveTo(x, y + i); ctx.lineTo(x + w, y + i); ctx.stroke();
-                    }
-                    ctx.strokeStyle = '#ff0080';
-                    ctx.lineWidth = 2;
-                    ctx.strokeRect(x, y, w, h);
-                    break;
-                case 'sakura':
-                    ctx.strokeStyle = '#ffb7c5';
-                    ctx.lineWidth = 12;
-                    ctx.strokeRect(x + 6, y + 6, w - 12, h - 12);
-                    ctx.fillStyle = '#ffb7c5';
-                    for (let i = 0; i < 20; i++) {
-                        const px = x + (Math.sin(i) * 0.5 + 0.5) * w;
-                        const py = y + (Math.cos(i * 1.5) * 0.5 + 0.5) * h;
-                        ctx.beginPath();
-                        ctx.ellipse(px, py, 4, 7, i * 0.5, 0, Math.PI * 2);
-                        ctx.fill();
-                    }
-                    break;
-                case 'minimal':
-                    ctx.strokeStyle = 'white';
-                    ctx.lineWidth = 1;
-                    ctx.strokeRect(x + 4, y + 4, w - 8, h - 8);
-                    ctx.strokeStyle = 'rgba(255,255,255,0.3)';
-                    ctx.strokeRect(x + 12, y + 12, w - 24, h - 24);
-                    break;
-            }
-            ctx.restore();
-        }
-
-        function drawFooter() {
-            const footerY = stripCanvas.height - 40;
-            stripCtx.fillStyle = '#FF2D78';
-            stripCtx.font = 'bold 16px Orbitron';
-            stripCtx.textAlign = 'center';
-            stripCtx.fillText('AbIn Booth • by Abyan & Intan', stripCanvas.width / 2, footerY);
-        }
-
-        function downloadStrip() {
-            const link = document.createElement('a');
-            link.download = 'abin-booth-strip.png';
-            link.href = stripCanvas.toDataURL('image/png');
-            link.click();
-        }
-
-        function resetBooth() {
-            capturedPhotos = [];
-            stripCtx.clearRect(0, 0, stripCanvas.width, stripCanvas.height);
-            readyBadge.style.display = 'none';
-            downloadBtn.style.display = 'none';
-            retakeBtn.style.display = 'none';
-            startBtn.innerText = "Start Shoot";
-        }
-
-        // Start the app
-        init();
-
-        // Handle window resize for canvas scaling
-        window.addEventListener('resize', () => {
-            arCanvas.width = video.clientWidth;
-            arCanvas.height = video.clientHeight;
-        });
-        
-        // Initial canvas sizing
-        video.onloadedmetadata = () => {
-            arCanvas.width = video.clientWidth;
-            arCanvas.height = video.clientHeight;
-        };
-    </script>
-
+    <!-- Application Logic -->
+    <script type="module" src="app.js"></script>
 </body>
 </html>
